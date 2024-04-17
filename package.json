@@ -7,8 +7,11 @@
     "excalidraw",
     "render"
   ],
-  "author": "",
+  "author": "fwx5618177",
   "license": "ISC",
+  "repository": {
+    "url": ""
+  },
   "scripts": {
     "postinstall": "npm run build:prod",
     "prepare": "husky install",
