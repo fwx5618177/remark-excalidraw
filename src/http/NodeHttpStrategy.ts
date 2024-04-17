@@ -1,9 +1,9 @@
 import { HttpOptions } from 'remark-excalidraw';
 import fetch from 'node-fetch';
 
-import { HttpAdapter } from './HttpAdapter';
+import { BaseHttpStrategy } from './BaseHttpStrategy';
 
-export class NodeHttpAdapter extends HttpAdapter {
+export class NodeHttpStrategy extends BaseHttpStrategy {
     override async request<T>(url: string, options?: HttpOptions): Promise<T> {
         const response = await fetch(url, options);
 

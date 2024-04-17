@@ -23,6 +23,10 @@ declare module 'remark-excalidraw' {
         body?: any;
     };
 
+    interface HttpStrategy {
+        request<T>(url: string, options?: HttpOptions): Promise<T>;
+    }
+
     interface ContentStrategy {
         handleContent(content: string): string;
     }
