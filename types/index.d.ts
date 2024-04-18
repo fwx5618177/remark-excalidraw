@@ -1,19 +1,18 @@
 declare module 'remark-excalidraw' {
     import { Node } from 'unist';
 
+    type Mode = 'raw' | 'line' | 'inline';
     type Options = {
-        mode?: 'iframe' | 'metadata';
-        runtime?: 'node' | 'browser';
+        mode?: Mode;
     };
 
-    interface CodeNode extends Node {
-        lang: string;
-        meta: string;
+    interface TextNode extends Node {
+        type: 'text';
         value: string;
-        data?: {
-            hProperties?: {
-                [key: string]: any;
-            };
+        extra?: {
+            type: 'jsx' | 'html';
+            sorts: 'card' | 'image' | 'link' | 'video' | 'iframe';
+            value: string;
         };
     }
 
@@ -30,4 +29,25 @@ declare module 'remark-excalidraw' {
     interface ContentStrategy {
         handleContent(content: string): string;
     }
+
+    type HelperCtx = {
+        providers: Providers;
+    } & Options;
+
+    interface HelperStrategy {
+        helperProcess(ctx: HelperCtx, node: TextNode): void;
+    }
+
+    type endPoints = {
+        schemes: string[];
+        url: string;
+    };
+
+    interface ProviderProps {
+        provider_name: string;
+        provider_url: string;
+        endpoints: endPoints[];
+    }
+
+    type Providers = ProviderProps[];
 }

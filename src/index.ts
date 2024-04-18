@@ -1,17 +1,21 @@
-import { CodeNode, Options } from 'remark-excalidraw';
+import { Providers, TextNode, Options } from 'remark-excalidraw';
 import { visit } from 'unist-util-visit';
 
+import { RuntimeFactory } from './http/RuntimeFactory';
+import { COMMON } from './constants';
 
 const remarkSandpack = (options: Options) => {
-    return (tree: CodeNode) => {
-        visit(tree, 'code', (node: CodeNode) => {
-            // const meta = Utils.parseCodeBlock(node.meta);
-            // const sandboxMeta = meta?.codesandbox;
-            // if (!sandboxMeta) return;
+    return async (tree: TextNode) => {
+        const providers = await RuntimeFactory.getHttpStrategy().request<Providers>(
+            COMMON.OEMBED_PROVIDERS_URL,
+        );
 
-            // 执行策略实现代码的处理
-            // Utils.processNodeForDisplay(node, sandboxMeta, options);
-        });
+        const ctx = {
+            ...options,
+            providers,
+        };
+
+        visit(tree, 'text', (node: TextNode) => {});
     };
 };
 

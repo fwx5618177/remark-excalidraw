@@ -39,7 +39,8 @@
         "skipLibCheck": true,
         "declaration": true,
         "emitDeclarationOnly": true,
-        "declarationDir": "./dist/types"
+        "declarationDir": "./dist/types",
+        "resolveJsonModule": true
     },
     "include": ["src/**/*", "tests/**/*.spec.ts", "types"],
     "exclude": ["node_modules", "dist", "**/dist"],

@@ -1,0 +1,14 @@
+[
+    {
+        "provider_name": "Excalidraw",
+        "provider_url": "https://excalidraw.com/",
+        "endpoints": [
+            {
+                "schemes": [
+                    "https://excalidraw.com/*"
+                ],
+                "url": "https://excalidraw.com/"
+            }
+        ]
+    }
+]
