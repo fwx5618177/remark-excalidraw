@@ -24,8 +24,14 @@ export class RuntimeFactory {
     }
 
     public static getHttpStrategy(): HttpStrategy {
-        if (!this.httpStrategy) throw new Error('HttpStrategy has not been initialized.');
+        if (!this.httpStrategy) {
+            RuntimeFactory.getInstance();
+        }
 
-        return this.httpStrategy;
+        if (!this.httpStrategy) {
+            throw new Error('HttpStrategy has not been initialized.');
+        }
+
+        return this.httpStrategy!;
     }
 }

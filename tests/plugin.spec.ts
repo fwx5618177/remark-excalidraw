@@ -4,7 +4,7 @@ import { describe, it } from 'mocha';
 import { join } from 'path';
 import { remark } from 'remark';
 
-import excalidraw from '../src/index';
+import remarkExcalidraw from '../src';
 import { visit } from 'unist-util-visit';
 
 describe('Plugin', function () {
@@ -19,21 +19,24 @@ describe('Plugin', function () {
     });
 
     it('should parse the markdown content', function () {
-        const ast = remark().use(excalidraw, {}).parse(markdownContent);
-        // console.log('AST:', JSON.stringify(ast, null, 4));
+        const ast = remark().use(remarkExcalidraw, {}).parse(markdownContent);
+        expect(ast).to.be.an('object');
     });
 
-    it('should render the markdown content', function () {
-        const ast = remark().parse(markdownContent);
-
+    it('should render the markdown content', async function () {
         remark()
-            .use(excalidraw, {})
-            .run(ast, function (error, processedAst) {
-                if (error) throw error;
-
-                visit(processedAst as any, 'text', node => {
-                    // console.log('Node:', node);
-                });
-            });
+            .use(remarkExcalidraw, {
+                mode: 'line',
+            })
+            .use(() => {
+                return tree => {
+                    visit(tree, 'text', (node: any) => {
+                        if (node && node?.data) {
+                            expect(node.data).to.be.an('object');
+                        }
+                    });
+                };
+            })
+            .parse(markdownContent);
     });
 });

@@ -1,22 +1,36 @@
 declare module 'remark-excalidraw' {
     import { Node } from 'unist';
+    import { Response as NodeResponse } from 'node-fetch';
 
     type Mode = 'raw' | 'line';
+    type ExtraType = 'jsx' | 'html';
 
     type Options = {
         mode?: Mode;
+        type?: ExtraType;
     };
 
-    type ExtraSort = 'card' | 'image' | 'link' | 'video' | 'iframe' | 'title';
-    type ExtraType = 'jsx' | 'html';
+    interface BaseSort {
+        photo: string;
+        video: string;
+    }
+
+    interface ExtraSort extends BaseSort {
+        card: string;
+        excalidraw: string;
+        anchor: string;
+        iframe: string;
+    }
 
     interface TextNode extends Node {
         type: 'text';
         value: string;
-        extra?: {
-            type: ExtraType;
-            sorts: Sort;
-            value: string;
+        data?: {
+            extra?: {
+                type?: ExtraType;
+                sorts?: keyof ExtraSort;
+                value?: string;
+            };
         };
     }
 
@@ -27,11 +41,12 @@ declare module 'remark-excalidraw' {
     };
 
     interface HttpStrategy {
-        request<T>(url: string, options?: HttpOptions): Promise<T>;
+        requestProvider<T>(url: string, options?: HttpOptions): Promise<T>;
+        request(url: string, options?: HttpOptions): Promise<Response | NodeResponse>;
     }
 
     interface ContentStrategy {
-        handleContent(content: string): string;
+        handleContent(data: string): string;
     }
 
     type HelperCtx = {
@@ -39,19 +54,49 @@ declare module 'remark-excalidraw' {
     } & Options;
 
     interface HelperStrategy {
-        helperProcess(ctx: HelperCtx, node: TextNode): void;
+        helperProcess(ctx: HelperCtx, node: TextNode): Promise<void>;
     }
 
-    type endPoints = {
+    type EndPoints = {
         schemes: string[];
         url: string;
+        params?: any; // TODO: remove it
     };
 
     interface ProviderProps {
         provider_name: string;
         provider_url: string;
-        endpoints: endPoints[];
+        endpoints: EndPoints[];
     }
 
     type Providers = ProviderProps[];
+
+    type ProviderURL = {
+        name: string;
+        url: string;
+        query: Record<string, string>;
+    };
+
+    interface CommonOembedInfo {
+        version: string;
+        type: string;
+        title: string;
+        author_name: string;
+        author_url: string;
+        provider_name: string;
+        provider_url: string;
+        thumbnail_url: string;
+        thumbnail_width: number;
+        thumbnail_height: number;
+        width: number;
+        height: number;
+    }
+
+    interface OembedVideoInfo extends CommonOembedInfo {
+        html: string;
+    }
+
+    interface OembedImageInfo extends CommonOembedInfo {
+        url: string;
+    }
 }

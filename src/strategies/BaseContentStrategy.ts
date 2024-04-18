@@ -1,6 +1,8 @@
-import { ContentStrategy } from 'remark-excalidraw';
+import { ContentStrategy, TextNode } from 'remark-excalidraw';
 
 export abstract class BaseContentStrategy implements ContentStrategy {
+    public node?: TextNode;
+
     abstract handleContent(data: any): string;
 
     protected logError(error: Error): void {
@@ -11,7 +13,8 @@ export abstract class BaseContentStrategy implements ContentStrategy {
         console.info('Info:', info);
     }
 
-    public process(data: any) {
+    public process(node: TextNode, data: any) {
+        this.node = node;
         try {
             this.handleContent(data);
         } catch (error) {

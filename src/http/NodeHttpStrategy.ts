@@ -1,10 +1,10 @@
 import { HttpOptions } from 'remark-excalidraw';
-import fetch from 'node-fetch';
+import fetch, { Response } from 'node-fetch';
 
 import { BaseHttpStrategy } from './BaseHttpStrategy';
 
 export class NodeHttpStrategy extends BaseHttpStrategy {
-    override async request<T>(url: string, options?: HttpOptions): Promise<T> {
+    override async requestProvider<T>(url: string, options?: HttpOptions): Promise<T> {
         const response = await fetch(url, options);
 
         if (response.status !== 200 || !response.ok) {
@@ -12,5 +12,11 @@ export class NodeHttpStrategy extends BaseHttpStrategy {
         }
 
         return response.json() as T;
+    }
+
+    override async request(url: string, options?: HttpOptions): Promise<Response> {
+        const response = await fetch(url, options);
+
+        return response;
     }
 }

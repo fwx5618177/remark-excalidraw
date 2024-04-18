@@ -33,7 +33,7 @@ describe('Strategy', () => {
     it('should throw an error if trying to process data without a strategy set', () => {
         const factory = StrategyFactory.getInstance();
         factory.strategyInstance = undefined as any; // clear strategy to simulate this test case
-        expect(() => factory.process('Some data')).to.throw('not set strategy');
+        expect(() => factory.process(null as any, 'Some data')).to.throw('not set strategy');
     });
 
     it('should process data correctly using the set strategy', () => {
@@ -41,14 +41,13 @@ describe('Strategy', () => {
         const mockStrategy = new MockStrategy();
         factory.strategyInstance = mockStrategy;
 
-        // Here we are not actually testing console output, just that no error is thrown
-        expect(() => factory.process('Hello, world!')).to.not.throw();
+        expect(() => factory.process(null as any, 'Hello, world!')).to.not.throw();
     });
 
     it('should return the correct strategy', () => {
         const factory = StrategyFactory.getInstance();
         factory.strategyInstance = new MockStrategy();
-        factory.process('Hello, world!');
+        factory.process(null as any, 'Hello, world!');
 
         expect(factory.strategyInstance).to.be.instanceOf(MockStrategy);
         expect(factory.strategyInstance.handleContent('Hello, world!')).to.equal('Hello, world!');

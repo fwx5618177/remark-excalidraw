@@ -5,21 +5,23 @@ import { RuntimeFactory } from './http/RuntimeFactory';
 import { COMMON } from './constants';
 import { HelperFactory } from './helpers/HelperFactory';
 
-const remarkSandpack = (options: Options) => {
+const remarkExcalidraw = (options: Options) => {
     return async (tree: TextNode) => {
-        const providers = await RuntimeFactory.getHttpStrategy().request<Providers>(
+        RuntimeFactory.getInstance();
+
+        const providers = await RuntimeFactory.getHttpStrategy().requestProvider<Providers>(
             COMMON.OEMBED_PROVIDERS_URL,
         );
 
         const ctx = {
             ...options,
-            providers,
+            providers: [...providers, ...COMMON.DEFAULT_DRAW_PROVIDER],
         };
 
         visit(tree, 'text', (node: TextNode) => {
-            HelperFactory.getInstance().process(ctx, node);
+            Promise.all([HelperFactory.getInstance().process(ctx, node)]);
         });
     };
 };
 
-export default remarkSandpack;
+export default remarkExcalidraw;

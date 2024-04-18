@@ -3,7 +3,7 @@ import { HelperStrategy, HelperCtx, TextNode } from 'remark-excalidraw';
 import { BaseHelper } from './BaseHelper';
 
 export class RawHelper extends BaseHelper implements HelperStrategy {
-    override helperProcess(ctx: HelperCtx, node: TextNode): void {
-        console.log('RawHelper:', ctx, node);
+    override async helperProcess(ctx: HelperCtx, node: TextNode): Promise<void> {
+        console.log('not implemented yet', ctx, node);
     }
 }

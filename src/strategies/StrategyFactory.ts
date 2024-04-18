@@ -1,4 +1,4 @@
-import { ContentStrategy } from 'remark-excalidraw';
+import { ContentStrategy, TextNode } from 'remark-excalidraw';
 
 import { BaseContentStrategy } from './BaseContentStrategy';
 
@@ -16,6 +16,10 @@ export class StrategyFactory {
         return StrategyFactory.instance;
     }
 
+    set node(node: TextNode) {
+        this.node = node;
+    }
+
     set strategyInstance(strategy: ContentStrategy) {
         this.strategy = strategy;
     }
@@ -26,9 +30,9 @@ export class StrategyFactory {
         return this.strategy;
     }
 
-    public process(data: any) {
+    public process(node: TextNode, data: any) {
         if (!this.strategy) throw new Error('not set strategy');
 
-        (this.strategy as BaseContentStrategy).process(data);
+        (this.strategy as BaseContentStrategy).process(node, data);
     }
 }

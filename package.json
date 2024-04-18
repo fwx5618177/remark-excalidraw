@@ -66,6 +66,7 @@
     "typescript": "^5.4.5",
     "unist-builder": "^4.0.0",
     "unist-util-is": "^6.0.0",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.0.0",
+    "url": "^0.11.3"
   }
 }

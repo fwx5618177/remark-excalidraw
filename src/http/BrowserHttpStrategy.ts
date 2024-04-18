@@ -3,7 +3,7 @@ import { HttpOptions } from 'remark-excalidraw';
 import { BaseHttpStrategy } from './BaseHttpStrategy';
 
 export class BrowserHttpStrategy extends BaseHttpStrategy {
-    override async request<T>(url: string, options?: HttpOptions): Promise<T> {
+    override async requestProvider<T>(url: string, options?: HttpOptions): Promise<T> {
         const response = await fetch(url, options);
 
         if (response.status !== 200 || !response.ok) {
@@ -11,5 +11,11 @@ export class BrowserHttpStrategy extends BaseHttpStrategy {
         }
 
         return response.json();
+    }
+
+    override async request(url: string, options?: HttpOptions | undefined): Promise<Response> {
+        const response = await fetch(url, options);
+
+        return response;
     }
 }

@@ -5,9 +5,14 @@
         "endpoints": [
             {
                 "schemes": [
-                    "https://excalidraw.com/*"
+                    "https://excalidraw.com/*",
+                    "https://www.excalidraw.com/*",
+                    "https://excalidraw.com/share/*",
+                    "https://www.excalidraw.com/share/*",
+                    "https://excalidraw.com/scene/*"
                 ],
-                "url": "https://excalidraw.com/"
+                "url": "https://excalidraw.com/oembed",
+                "discovery": true
             }
         ]
     }

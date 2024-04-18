@@ -1,28 +1,50 @@
 import { HelperStrategy, HelperCtx, TextNode } from 'remark-excalidraw';
 import isUrl from 'is-url';
+import { RuntimeFactory } from 'src/http/RuntimeFactory';
 
 import { BaseHelper } from './BaseHelper';
+import { ResponseHandler } from './ResponseHandler';
 
 export class LineHelper extends BaseHelper implements HelperStrategy {
-    override helperProcess(ctx: HelperCtx, node: TextNode): void {
+    override async helperProcess(ctx: HelperCtx, node: TextNode): Promise<void> {
         const { value } = node;
 
         if (!value) return;
 
-        /**
-         * TODO:
-         * 1. 如果只有 link，则处理 link
-         * 2. 如果包含 link 和 text，则提取 link
-         * 3. 根据不同的link，选择和处理不同的行为
-         */
-
         let link;
         if (isUrl(value)) {
-            console.log('is url');
+            link = value.trim();
         } else {
             link = this.extractLink(value);
         }
 
-        console.log(node, link);
+        if (link) {
+            const provider = this.getProviders(link, ctx.providers);
+
+            if (!provider) return;
+
+            const oembedInfo = new URL(provider.url);
+            const params = new URLSearchParams({
+                url: link,
+                format: 'json',
+                ...provider.query,
+            }).toString();
+
+            oembedInfo.search = params;
+            const embedLink = oembedInfo.href;
+            const response = await RuntimeFactory.getHttpStrategy().request(embedLink);
+
+            if (!response.ok || response.status !== 200) return;
+
+            const type = ctx.type || 'html';
+
+            node.data = {
+                extra: {
+                    type,
+                },
+            };
+
+            await ResponseHandler.handleResponse(response, node, link);
+        }
     }
 }

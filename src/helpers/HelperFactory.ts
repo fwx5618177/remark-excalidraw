@@ -1,7 +1,6 @@
 import { HelperCtx, HelperStrategy, Mode, TextNode } from 'remark-excalidraw';
 
 import { RawHelper } from './RawHelper';
-import { InlineHelper } from './InlineHelper';
 import { LineHelper } from './LineHelper';
 
 export class HelperFactory {
@@ -12,7 +11,6 @@ export class HelperFactory {
     private constructor() {
         this.helpers = {
             raw: new RawHelper(),
-            inline: new InlineHelper(),
             line: new LineHelper(),
         };
     }
@@ -25,7 +23,7 @@ export class HelperFactory {
         return HelperFactory.instance;
     }
 
-    public process(ctx: HelperCtx, node: TextNode) {
+    public async process(ctx: HelperCtx, node: TextNode) {
         if (!this.helpers) throw new Error('not found helpers');
 
         this.mode = ctx?.mode || 'line';
@@ -33,6 +31,6 @@ export class HelperFactory {
 
         if (!helper) throw new Error('not found helper');
 
-        return helper.helperProcess(ctx, node);
+        await helper.helperProcess(ctx, node);
     }
 }
