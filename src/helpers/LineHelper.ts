@@ -1,4 +1,5 @@
 import { HelperStrategy, HelperCtx, TextNode } from 'remark-excalidraw';
+import isUrl from 'is-url';
 
 import { BaseHelper } from './BaseHelper';
 
@@ -15,6 +16,13 @@ export class LineHelper extends BaseHelper implements HelperStrategy {
          * 3. 根据不同的link，选择和处理不同的行为
          */
 
-        console.log(ctx, node);
+        let link;
+        if (isUrl(value)) {
+            console.log('is url');
+        } else {
+            link = this.extractLink(value);
+        }
+
+        console.log(node, link);
     }
 }

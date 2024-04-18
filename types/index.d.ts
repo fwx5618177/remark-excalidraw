@@ -1,17 +1,21 @@
 declare module 'remark-excalidraw' {
     import { Node } from 'unist';
 
-    type Mode = 'raw' | 'line' | 'inline';
+    type Mode = 'raw' | 'line';
+
     type Options = {
         mode?: Mode;
     };
+
+    type ExtraSort = 'card' | 'image' | 'link' | 'video' | 'iframe' | 'title';
+    type ExtraType = 'jsx' | 'html';
 
     interface TextNode extends Node {
         type: 'text';
         value: string;
         extra?: {
-            type: 'jsx' | 'html';
-            sorts: 'card' | 'image' | 'link' | 'video' | 'iframe';
+            type: ExtraType;
+            sorts: Sort;
             value: string;
         };
     }

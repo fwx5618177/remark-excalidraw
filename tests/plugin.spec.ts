@@ -32,7 +32,7 @@ describe('Plugin', function () {
                 if (error) throw error;
 
                 visit(processedAst as any, 'text', node => {
-                    console.log('Node:', node);
+                    // console.log('Node:', node);
                 });
             });
     });

@@ -3,6 +3,7 @@ import { visit } from 'unist-util-visit';
 
 import { RuntimeFactory } from './http/RuntimeFactory';
 import { COMMON } from './constants';
+import { HelperFactory } from './helpers/HelperFactory';
 
 const remarkSandpack = (options: Options) => {
     return async (tree: TextNode) => {
@@ -15,7 +16,9 @@ const remarkSandpack = (options: Options) => {
             providers,
         };
 
-        visit(tree, 'text', (node: TextNode) => {});
+        visit(tree, 'text', (node: TextNode) => {
+            HelperFactory.getInstance().process(ctx, node);
+        });
     };
 };
 
