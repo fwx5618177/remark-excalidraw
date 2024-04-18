@@ -4,7 +4,7 @@ import { BaseContentStrategy } from 'src/strategies/BaseContentStrategy';
 import { StrategyFactory } from 'src/strategies/StrategyFactory';
 
 class MockStrategy extends BaseContentStrategy {
-    handleContent(data: any): string {
+    override handleContent(data: any): string {
         return data;
     }
 }

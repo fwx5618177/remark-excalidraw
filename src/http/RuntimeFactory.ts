@@ -5,10 +5,10 @@ import { NodeHttpStrategy } from './NodeHttpStrategy';
 
 export class RuntimeFactory {
     private static instance?: RuntimeFactory;
-    private static httpAdapter?: HttpStrategy;
+    private static httpStrategy?: HttpStrategy;
 
     private constructor() {
-        RuntimeFactory.httpAdapter = this.determineRuntime();
+        RuntimeFactory.httpStrategy = this.determineRuntime();
     }
 
     private determineRuntime(): HttpStrategy {
@@ -23,9 +23,9 @@ export class RuntimeFactory {
         return RuntimeFactory.instance;
     }
 
-    public static getHttpAdapter(): HttpStrategy {
-        if (!this.httpAdapter) throw new Error('HttpAdapter has not been initialized.');
+    public static getHttpStrategy(): HttpStrategy {
+        if (!this.httpStrategy) throw new Error('HttpStrategy has not been initialized.');
 
-        return this.httpAdapter;
+        return this.httpStrategy;
     }
 }

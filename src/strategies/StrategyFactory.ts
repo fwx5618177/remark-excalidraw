@@ -4,7 +4,7 @@ import { BaseContentStrategy } from './BaseContentStrategy';
 
 export class StrategyFactory {
     private static instance: StrategyFactory;
-    private strategy: ContentStrategy | undefined;
+    private strategy?: ContentStrategy;
 
     constructor() {}
 
