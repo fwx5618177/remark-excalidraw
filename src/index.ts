@@ -5,7 +5,7 @@ import { RuntimeFactory } from './http/RuntimeFactory';
 import { COMMON } from './constants';
 import { HelperFactory } from './helpers/HelperFactory';
 
-const remarkExcalidraw = (options: Options) => {
+const remarkExcalidraw = (options?: Options) => {
     return async (tree: TextNode) => {
         RuntimeFactory.getInstance();
 

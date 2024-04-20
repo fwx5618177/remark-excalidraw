@@ -1,6 +1,6 @@
 {
   "name": "remark-excalidraw",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "To render the excalidraw on website iframe",
   "main": "index.js",
   "keywords": [
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@types/chai": "^4.3.14",
     "@types/is-url": "^1.2.32",
+    "@types/jsdom": "^21.1.6",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.12.7",
     "@types/unist": "^3.0.2",
@@ -60,8 +61,11 @@
     "node-fetch": "^3.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-markdown": "^9.0.1",
     "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
     "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5",
     "unist-builder": "^4.0.0",
