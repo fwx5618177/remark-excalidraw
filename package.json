@@ -2,34 +2,36 @@
   "name": "remark-excalidraw",
   "version": "0.1.0",
   "description": "To render the excalidraw on website iframe",
-  "main": "index.js",
+  "main": "dist/index.js",
   "keywords": [
     "excalidraw",
-    "render"
+    "render",
+    "remark"
   ],
   "author": "fwx5618177",
   "license": "ISC",
   "repository": {
+    "url": "",
+    "type": "git"
+  },
+  "bugs": {
     "url": ""
   },
   "scripts": {
-    "postinstall": "npm run build:prod",
     "prepare": "husky install",
-    "test": "mocha",
+    "test": "c8 mocha",
+    "coveralls": "c8 report --reporter=text-lcov | coveralls",
     "test:watch": "mocha --watch --clean-cache",
-    "start": "node --import tsx dist/main.js",
     "pub:beta": "npm version prerelease --preid=beta",
     "pub:patch": "npm version patch",
-    "rm": "rimraf dist",
-    "build": "swc src -d dist --source-maps -D --strip-leading-paths",
-    "build:type": "tsc --emitDeclarationOnly",
-    "build:prod": "npm run rm && npm run build:type && npm run build",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
     "lint": "eslint --config .eslintrc . --cache --debug",
     "lint:fix": "eslint --fix .",
-    "prettier": "prettier --ignore-path .gitignore --write \"**/*.{ts,js}\""
+    "prettier": "prettier --ignore-path .gitignore --write \"**/*.{ts,js,md,json}\""
   },
   "engines": {
-    "node": ">=20.10.0"
+    "node": ">=18.10.0 || <=20.10.0"
   },
   "devDependencies": {
     "@types/chai": "^4.3.14",
@@ -50,11 +52,11 @@
     "mocha": "^10.4.0",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
-    "unified": "^11.0.4"
+    "unified": "^11.0.4",
+    "c8": "^9.1.0",
+    "coveralls": "^3.1.1"
   },
   "dependencies": {
-    "@swc/cli": "^0.3.12",
-    "@swc/core": "^1.4.14",
     "@types/react": "^18.2.78",
     "@types/react-dom": "^18.2.25",
     "is-url": "^1.2.4",
@@ -62,7 +64,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^9.0.1",
-    "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "remark-parse": "^11.0.0",
     "remark-stringify": "^11.0.0",
@@ -72,5 +73,8 @@
     "unist-util-is": "^6.0.0",
     "unist-util-visit": "^5.0.0",
     "url": "^0.11.3"
+  },
+  "peerDependencies": {
+    "remark": "^15.0.1"
   }
 }

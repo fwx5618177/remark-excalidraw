@@ -17,6 +17,12 @@ export class ExcalidrawStrategy extends BaseContentStrategy implements ContentSt
             },
         };
 
+        // TODO: it's test case
+        // this.node = {
+        //     type: 'html',
+        //     value: data.toString(),
+        // };
+
         return data;
     }
 }
