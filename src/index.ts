@@ -18,9 +18,12 @@ const remarkExcalidraw = (options?: Options) => {
             providers: [...providers, ...COMMON.DEFAULT_DRAW_PROVIDER],
         };
 
+        const promises: PromiseLike<any>[] = [];
         visit(tree, 'text', (node: TextNode) => {
-            Promise.all([HelperFactory.getInstance().process(ctx, node)]);
+            promises.push(HelperFactory.getInstance().process(ctx, node));
         });
+
+        await Promise.all(promises);
     };
 };
 

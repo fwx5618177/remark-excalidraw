@@ -1,4 +1,4 @@
-import { HttpOptions } from 'remark-excalidraw';
+import { HttpOptions } from 'type';
 
 import { BaseHttpStrategy } from './BaseHttpStrategy';
 

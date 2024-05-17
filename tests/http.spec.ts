@@ -1,9 +1,10 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
 // import { COMMON } from 'src/constants';
-import { BrowserHttpStrategy } from 'src/http/BrowserHttpStrategy';
-import { NodeHttpStrategy } from 'src/http/NodeHttpStrategy';
-import { RuntimeFactory } from 'src/http/RuntimeFactory';
+
+import { BrowserHttpStrategy } from '../src/http/BrowserHttpStrategy';
+import { NodeHttpStrategy } from '../src/http/NodeHttpStrategy';
+import { RuntimeFactory } from '../src/http/RuntimeFactory';
 
 describe('RuntimeFactory', function () {
     it('should return the same instance of RuntimeFactory', function () {

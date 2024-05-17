@@ -1,0 +1,58 @@
+name: CI - Build Stage
+
+on:
+    push:
+        branches:
+            - master
+            - next
+            - beta
+            - alpha
+
+jobs:
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+
+        if: github.repository_owner == 'fwx5618177'
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20.x'
+
+            - name: Install pnpm
+              run: npm install -g pnpm
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Run tests
+              run: pnpm test
+
+            - name: Submit coverage to Coveralls
+              run: pnpm run coveralls
+              env:
+                  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
+            - name: Prepare build
+              run: pnpm run build
+
+            - name: Package Release Assets
+              run: |
+                  tar -czf release.tar.gz dist
+
+            - name: Semantic Release
+              uses: cycjimmy/semantic-release-action@v4
+              with:
+                  extra_plugins: |
+                      @semantic-release/changelog
+                      conventional-changelog-conventionalcommits
+                      @semantic-release/git
+              env:
+                  GITHUB_TOKEN: ${{ secrets.CODESANDBOX_GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,4 +1,4 @@
-import { ContentStrategy, TextNode } from 'remark-excalidraw';
+import type { ContentStrategy, TextNode } from 'type';
 
 import { BaseContentStrategy } from './BaseContentStrategy';
 

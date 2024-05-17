@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { BaseContentStrategy } from 'src/strategies/BaseContentStrategy';
-import { StrategyFactory } from 'src/strategies/StrategyFactory';
+import { BaseContentStrategy } from '../src/strategies/BaseContentStrategy';
+import { StrategyFactory } from '../src/strategies/StrategyFactory';
 
 class MockStrategy extends BaseContentStrategy {
     override handleContent(data: any): string {
