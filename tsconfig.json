@@ -38,7 +38,7 @@
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "declaration": true,
-        "emitDeclarationOnly": true,
+        "emitDeclarationOnly": false,
         "declarationDir": "./dist/types",
         "resolveJsonModule": true
     },

@@ -63,7 +63,7 @@ describe('Plugin', function () {
 });
 
 describe('Mock Plugin', function () {
-    const asyncPlugin = (options?: any) => {
+    const asyncPlugin = () => {
         return async (tree: any) => {
             await new Promise(resolve => {
                 visit(tree, 'text', node => {
